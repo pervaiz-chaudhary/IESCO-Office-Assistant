@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IESCO Grid Station Records</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 20px;
+      color: #1e293b;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    header {
+      background: #075985;
+      color: white;
+      padding: 22px;
+      text-align: center;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 25px;
+    }
+
+    .form-card, .table-card {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px #00000012;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 85px;
+      resize: vertical;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      margin: 8px 5px 0 0;
+    }
+
+    .save-btn {
+      background: #15803d;
+      color: white;
+    }
+
+    .clear-btn {
+      background: #64748b;
+      color: white;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 850px;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 10px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: #e0f2fe;
+    }
+
+    .delete-btn {
+      background: #dc2626;
+      color: white;
+      padding: 7px 10px;
+    }
+
+    #message {
+      margin-top: 12px;
+      font-weight: bold;
+      color: #15803d;
+    }
+
+    @media (max-width: 650px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full-width {
+        grid-column: auto;
+      }
+
+      body {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <header>
+      <h1>IESCO GRID STATION RECORDS</h1>
+      <p>132 kV / 66 kV Power Transformer Management</p>
+    </header>
+
+    <section class="form-card">
+      <h2>Enter Grid Station Record</h2>
+
+      <form id="recordForm">
+        <div class="form-grid">
+
+          <div>
+            <label for="station">Grid Station Name *</label>
+            <input id="station" type="text" placeholder="e.g. Rajjar" required>
+          </div>
+
+          <div>
+            <label for="voltage">Voltage Level *</label>
+            <select id="voltage" required>
+              <option value="">Select Voltage</option>
+              <option>132 kV</option>
+              <option>66 kV</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="transformer">Power Transformer Number *</label>
+            <input id="transformer" type="text" placeholder="e.g. T-1" required>
+          </div>
+
+          <div>
+            <label for="capacity">Transformer Capacity (MVA) *</label>
+            <select id="Capacity" required>
+              <option value="">Select Capacity</option>
+              <option>10/13 MVA </option>
+              <option>20/26 MVA</option>
+              <option>31.5/40 MVA</option>
+
+            </select>
+
+
+           
+          </div>
+
+          <div>
+            <label for="manufacturer">Manufacturer / Make</label>
+            <input id="manufacturer" type="text" placeholder="e.g. Siemens">
+          </div>
+
+          <div>
+            <label for="installation">Installation Date</label>
+            <input id="installation" type="date">
+          </div>
+
+          <div>
+            <label for="commissioning">Commissioning Date</label>
+            <input id="commissioning" type="date">
+          </div>
+
+          <div>
+            <label for="condition">Condition / Status *</label>
+            <select id="condition" required>
+              <option value="">Select Status</option>
+              <option>Operational</option>
+              <option>Under Maintenance</option>
+              <option>Out of Service</option>
+              <option>Standby</option>
+            </select>
+          </div>
+
+          <div class="full-width">
+            <label for="remarks">Remarks</label>
+            <textarea id="remarks" placeholder="Enter additional details"></textarea>
+          </div>
+
+        </div>
+
+        <button class="save-btn" type="submit">Save Record</button>
+        <button class="clear-btn" type="reset">Clear Form</button>
+        <p id="message" role="status"></p>
+      </form>
+    </section>
+
+    <section class="table-card">
+      <h2>Saved Records</h2>
+      <p id="recordCount">Total Records: 0</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Station</th>
+              <th>Voltage</th>
+              <th>Transformer</th>
+              <th>Capacity (MVA)</th>
+              <th>Make</th>
+              <th>Installation</th>
+              <th>Commissioning</th>
+              <th>Status</th>
+              <th>Remarks</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="recordsTable">
+            <tr>
+              <td colspan="10">No records added yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    const form = document.getElementById("recordForm");
+    const table = document.getElementById("recordsTable");
+    const message = document.getElementById("message");
+
+    let records = [];
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const record = {
+        station: document.getElementById("station").value.trim(),
+        voltage: document.getElementById("voltage").value,
+        transformer: document.getElementById("transformer").value.trim(),
+        capacity: document.getElementById("capacity").value,
+        manufacturer: document.getElementById("manufacturer").value.trim(),
+        installation: document.getElementById("installation").value,
+        commissioning: document.getElementById("commissioning").value,
+        condition: document.getElementById("condition").value,
+        remarks: document.getElementById("remarks").value.trim()
+      };
+
+      if (record.installation && record.commissioning &&
+          record.commissioning < record.installation) {
+        message.textContent =
+          "Error: Commissioning date cannot be earlier than installation date.";
+        message.style.color = "#dc2626";
+        return;
+      }
+
+      records.push(record);
+      renderRecords();
+      form.reset();
+
+      message.textContent = "Record added successfully (demo only).";
+      message.style.color = "#15803d";
+    });
+
+    function addCell(row, value) {
+      const cell = document.createElement("td");
+      cell.textContent = value || "-";
+      row.appendChild(cell);
+    }
+
+    function renderRecords() {
+      table.replaceChildren();
+
+      records.forEach(function(record, index) {
+        const row = document.createElement("tr");
+
+        addCell(row, record.station);
+        addCell(row, record.voltage);
+        addCell(row, record.transformer);
+        addCell(row, record.capacity);
+        addCell(row, record.manufacturer);
+        addCell(row, record.installation);
+        addCell(row, record.commissioning);
+        addCell(row, record.condition);
+        addCell(row, record.remarks);
+
+        const actionCell = document.createElement("td");
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-btn";
+
+        deleteButton.addEventListener("click", function() {
+          records.splice(index, 1);
+          renderRecords();
+        });
+
+        actionCell.appendChild(deleteButton);
+        row.appendChild(actionCell);
+        table.appendChild(row);
+      });
+
+      document.getElementById("recordCount").textContent =
+        "Total Records: " + records.length;
+
+      if (records.length === 0) {
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+        cell.colSpan = 10;
+        cell.textContent = "No records added yet.";
+        row.appendChild(cell);
+        table.appendChild(row);
+      }
+    }
+  </script>
+</body>
+</html>
