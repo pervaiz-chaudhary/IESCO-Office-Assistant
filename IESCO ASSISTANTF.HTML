@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IESCO Office Assistant</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f5f2;
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1 {
+            color: green;
+        }
+
+        .menu {
+            background: white;
+            padding: 20px;
+            margin: 15px;
+            border-radius: 10px;
+        }
+
+        button {
+            background: green;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>IESCO Office Assistant</h1>
+
+    <p>Welcome to Office Automation Portal</p>
+
+    <div class="menu">
+        <h3>Grid Station Records</h3>
+        <button onclick="showMessage('Grid Station Records')">
+            Open
+        </button>
+    </div>
+
+    <div class="menu">
+        <h3>Transmission Line Records</h3>
+        <button onclick="showMessage('Transmission Line Records')">
+            Open
+        </button>
+    </div>
+
+    <div class="menu">
+        <h3>Shutdown Schedule</h3>
+        <button onclick="showMessage('Shutdown Schedule')">
+            Open
+        </button>
+    </div>
+
+    <script>
+        function showMessage(section) {
+            alert("Welcome to " + section);
+        }
+    </script>
+
+</body>
+</html>
